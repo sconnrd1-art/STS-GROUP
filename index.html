@@ -4,52 +4,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>集團門戶入口</title>
+    <title>集團門戶入口 | Corporate Portal</title>
+    
+    <!-- 外部資源 -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Inter', 'Noto Sans TC', sans-serif;
-            background: #0f172a;
+            background-color: #020617;
             margin: 0;
+            color: #f8fafc;
             overflow-x: hidden;
         }
+        
+        /* 毛玻璃效果 */
         .glass {
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        /* 背景光暈 */
         .glow {
             position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
             z-index: -1;
             border-radius: 50%;
             pointer-events: none;
         }
+
+        /* 進場動畫 */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fade-in {
-            animation: fadeInUp 0.8s ease-out forwards;
+        .animate-reveal {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
     </style>
-    <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom": "https://esm.sh/react-dom@^19.2.3",
-    "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
-  }
-}
-</script>
 </head>
 <body>
     <div id="root"></div>
+
+    <!-- React 邏輯與元件 -->
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // 公司卡片元件
+        const CompanyCard = ({ name, url, description, logoSrc, colorClass, delay }) => {
+            return (
+                <a 
+                    href={url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group relative block w-full animate-reveal"
+                    style={{ animationDelay: delay }}
+                >
+                    <div className={`glass h-full rounded-[2.5rem] p-8 md:p-12 flex flex-col items-center text-center transition-all duration-500 hover:-translate-y-4 hover:border-white/20 hover:shadow-2xl hover:shadow-${colorClass}-500/10`}>
+                        
+                        {/* Logo 放置區 */}
+                        <div className="relative w-full aspect-[2/1] bg-slate-900/60 rounded-3xl overflow-hidden mb-10 border border-white/5 flex items-center justify-center">
+                            <img 
+                                src={logoSrc} 
+                                alt={name} 
+                                className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700"
+                            />
+                            {/* 預留文字 Logo 位置 */}
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="text-4xl font-black tracking-widest text-white/10 group-hover:text-white/20 transition-all uppercase">
+                                    {name}
+                                </span>
+                            </div>
+                        </div>
+
+                        <h3 className={`text-3xl font-bold mb-4 group-hover:text-${colorClass}-400 transition-colors`}>
+                            {name}
+                        </h3>
+                        
+                        <p className="text-slate-400 text-lg font-light leading-relaxed mb-10 max-w-xs">
+                            {description}
+                        </p>
+
+                        <div className={`mt-auto flex items-center gap-3 text-sm font-bold tracking-widest opacity-60 group-hover:opacity-100 transition-all text-${colorClass}-400`}>
+                            VISIT WEBSITE
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    {/* 背景光暈效果 */}
+                    <div className={`absolute inset-0 -z-10 bg-${colorClass}-500/0 rounded-[2.5rem] blur-3xl group-hover:bg-${colorClass}-500/10 transition-all duration-700`} />
+                </a>
+            );
+        };
+
+        // 主應用程式
+        const App = () => {
+            return (
+                <div className="min-h-screen flex flex-col items-center relative py-12 px-6">
+                    {/* 動態背景 */}
+                    <div className="glow top-[-20%] left-[-10%]" />
+                    <div className="glow bottom-[-20%] right-[-10%] opacity-50" />
+
+                    {/* 頂部集團 Logo */}
+                    <header className="mb-24 text-center animate-reveal">
+                        <div className="flex flex-col items-center group cursor-default">
+                            <div className="w-24 h-24 bg-gradient-to-tr from-sky-500 to-indigo-600 rounded-[2rem] flex items-center justify-center shadow-2xl shadow-sky-500/20 mb-6 transform transition-all duration-700 group-hover:rotate-[360deg] group-hover:scale-110">
+                                <span className="text-white text-4xl font-black italic">G</span>
+                            </div>
+                            <h1 className="text-2xl font-black tracking-[0.4em] text-white uppercase">
+                                SOONTAI <span className="text-sky-400">GROUP</span>
+                            </h1>
+                            <div className="h-1 w-8 bg-sky-500 mt-3 rounded-full group-hover:w-24 transition-all duration-500" />
+                        </div>
+                    </header>
+
+                    {/* 標語 */}
+                    <div className="text-center mb-20 animate-reveal" style={{ animationDelay: '0.2s' }}>
+                        <h2 className="text-sm font-bold tracking-[0.5em] text-sky-400 uppercase mb-4 opacity-70">
+                            Innovation & Connectivity
+                        </h2>
+                        <p className="text-4xl md:text-6xl font-extralight text-white">
+                            連結世界 · <span className="font-bold">創造卓越</span>
+                        </p>
+                    </div>
+
+                    {/* 兩大子公司入口 */}
+                    <main className="grid grid-cols-1 lg:grid-cols-2 gap-10 w-full max-w-6xl">
+                        <CompanyCard 
+                            name="S-CONN"
+                            url="https://s-conn.com/"
+                            description="卓越的射頻連接器與高品質電纜組件解決方案。"
+                            logoSrc="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop"
+                            colorClass="sky"
+                            delay="0.4s"
+                        />
+                        <CompanyCard 
+                            name="SOONTAI"
+                            url="https://soontai.com/"
+                            description="全球領先的射頻與微波濾波器研發製造專家。"
+                            logoSrc="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?q=80&w=800&auto=format&fit=crop"
+                            colorClass="indigo"
+                            delay="0.6s"
+                        />
+                    </main>
+
+                    {/* 頁腳 */}
+                    <footer className="mt-auto pt-24 pb-8 w-full max-w-6xl border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 animate-reveal" style={{ animationDelay: '0.8s' }}>
+                        <div className="text-slate-500 text-xs tracking-widest uppercase">
+                            © {new Date().getFullYear()} SOONTAI GROUP. ALL RIGHTS RESERVED.
+                        </div>
+                        <div className="flex gap-8">
+                            <a href="#" className="text-slate-500 hover:text-white text-xs transition-colors uppercase tracking-tighter">Privacy Policy</a>
+                            <a href="#" className="text-slate-500 hover:text-white text-xs transition-colors uppercase tracking-tighter">Contact Support</a>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
