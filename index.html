@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STS GROUP - SOONTAI + S-CONN | Let's connect the world </title>
+    <title>STS GROUP</title>
     
     <!-- 外部資源 -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -73,14 +73,14 @@
                         {/* Logo 放置區 */}
                         <div className="relative w-full aspect-[2/1] bg-slate-900/60 rounded-3xl overflow-hidden mb-10 border border-white/5 flex items-center justify-center">
                             <img 
-                                src={https://s-conn.com/wp-content/uploads/2025/12/STS-LOGO_RF-STS-LOGO-複本.png} 
-                                alt={STS} 
+                                src="https://s-conn.com/wp-content/uploads/2025/12/STS-LOGO_RF-STS-LOGO-複本.png"
+                                alt={name} 
                                 className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700"
                             />
                             {/* 預留文字 Logo 位置 */}
                             <div className="absolute inset-0 flex items-center justify-center">
                                 <span className="text-4xl font-black tracking-widest text-white/10 group-hover:text-white/20 transition-all uppercase">
-                                    STS-GROUP
+                                    {name}
                                 </span>
                             </div>
                         </div>
@@ -161,7 +161,7 @@
                     {/* 頁腳 */}
                     <footer className="mt-auto pt-24 pb-8 w-full max-w-6xl border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 animate-reveal" style={{ animationDelay: '0.8s' }}>
                         <div className="text-slate-500 text-xs tracking-widest uppercase">
-                            © {new Date().getFullYear()} STS GROUP. ALL RIGHTS RESERVED.
+                            © {new Date().getFullYear()} SOONTAI GROUP. ALL RIGHTS RESERVED.
                         </div>
                         <div className="flex gap-8">
                             <a href="#" className="text-slate-500 hover:text-white text-xs transition-colors uppercase tracking-tighter">Privacy Policy</a>
